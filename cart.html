@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link rel="stylesheet" href="cart.css" />
+    <title>Cart</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo-container">
+        <a href="index.html"
+          ><img class="logoimg" src="images/logo.jpeg" alt=""
+        /></a>
+      </div>
+      <nav>
+        <div class="menu-toggle" onclick="toggleMenu()">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <a href="cart.html" class="shopping-cart-icon">
+          <img src="images/cart.png" alt="Shopping Cart" />
+        </a>
+
+        <ul id="menu" class="hidden menu">
+          <div class="menuOuter">
+            <div class="menuoption1">
+              <li><a class="buttons" href="index.html">Home</a></li>
+            </div>
+            <div class="menuoption">
+              <li><a class="buttons" href="menu.html">Menu</a></li>
+            </div>
+            <div class="menuoption1">
+              <li><a class="buttons" href="#">Specials</a></li>
+            </div>
+            <div class="menuoption">
+              <li>
+                <a class="buttons" href="reservation.html">Reserve Now</a>
+              </li>
+            </div>
+            <div class="darkModeContainer menuoption1">
+              <li><a class="buttons" href="#">Dark mode</a></li>
+              <li>
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    id="darkModeSwitch"
+                    onclick="toggleDarkMode()"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </li>
+            </div>
+            <div class="menuoption">
+              <li><a class="buttons" href="Login.html">Log In</a></li>
+            </div>
+            <div class="menuoption1">
+              <li><a class="buttons" href="Login.html">Sign Up</a></li>
+            </div>
+            <div class="menuoption">
+              <li><a class="buttons" href="#">Contact Us</a></li>
+            </div>
+            <div class="menuoption1">
+              <li><a class="buttons" href="#">About Us</a></li>
+            </div>
+            <div class="ratingReview">
+              <li><a class="buttons" href="#">Rating & Review</a></li>
+            </div>
+          </div>
+        </ul>
+      </nav>
+    </header>
+
+    <div id="cart-container"></div>
+
+    <div class="container">
+      <div class="border">
+        <div class="row border">
+          <div class="col">
+            
+            <div class="row">
+              <div class="col">Total Price:</div>
+              <div class="col text-right total-price">$0.00</div>
+            </div>
+          </div>
+          <div class="col pl-5">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter promo code"
+              />
+              <button class="btn" type="button">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <button class="submit-btn">Submit</button>
+    </div>
+
+    <footer class="footerClass">
+      <div class="option1">
+        <label>Contact Us</label>
+      </div>
+      <div class="option2">
+        <label>Nutritional & Allergens</label>
+      </div>
+      <div class="option1">
+        <label>Careers</label>
+      </div>
+      <div class="option2">
+        <label>FAQs</label>
+      </div>
+      <div class="option1">
+        <label>Gift Cards & Offers</label>
+      </div>
+      <div class="option2">
+        <label>Legal & Privacy Notices</label>
+      </div>
+      <div class="option1">
+        <label>Do Not Sell or Share My Personal Information</label>
+      </div>
+      <div class="option2">
+        <label>Accessibility Statement</label>
+      </div>
+    </footer>
+    <script type="module">
+      // Import necessary Firebase modules
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+      import {
+        getFirestore,
+        collection,
+        getDocs,
+        deleteDoc,
+        doc,
+      } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+      // Your Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyAe8YMj8gHoIBbarYoHo3EaSJ27ADN1gAQ",
+        authDomain: "cs422actual.firebaseapp.com",
+        projectId: "cs422actual",
+        storageBucket: "cs422actual.appspot.com",
+        messagingSenderId: "732736778005",
+        appId: "1:732736778005:web:ec34eaa2adeea98e90431c",
+        measurementId: "G-Y5RWRMPES1",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const db = getFirestore(app);
+
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          // Get the 'cart' collection from Firestore
+          const querySnapshot = await getDocs(collection(db, "cart"));
+          let totalPrice = 0; 
+          let itemCount = 0;
+          querySnapshot.forEach((doc) => {
+      itemCount++; // Increment item count for each item
+        });
+
+        // Calculate total price based on the number of items
+        totalPrice = itemCount * 10; // Assuming each item costs $10
+
+        // Display total price dynamically in the HTML
+        document.querySelector('.total-price').textContent = `$${totalPrice.toFixed(2)}`;
+        if (itemCount > 0) {
+      // If there are items, set the footer's position to relative
+          document.querySelector('.footerClass').style.position = 'relative';
+        } else {
+          // If there are no items, set the footer's position to its default position
+          document.querySelector('.footerClass').style.position = 'fixed';
+        }
+          querySnapshot.forEach((doc) => {
+            const itemPic = doc.data().image
+            const itemName = doc.data().item;
+            const itemPrice = "$10.00"; // Replace with actual price from Firestore if available
+            const itemId = doc.id; // Get the document ID
+            const itemDiv = createCartItemDiv(itemName, itemPrice, itemId, itemPic);
+            document.getElementById("cart-container").appendChild(itemDiv);
+            const quantityDropdown = itemDiv.querySelector(".quantity-dropdown");
+            
+          });
+        
+        } catch (error) {
+          console.error("Error getting documents: ", error);
+        }
+      });
+
+    
+      // Function to create HTML structure for each cart item
+      function createCartItemDiv(itemName, itemPrice, itemId, itemPic) {
+  const containerDiv = document.createElement("div");
+  containerDiv.classList.add("container");
+
+  const borderDiv = document.createElement("div");
+  borderDiv.classList.add("border");
+  borderDiv.style.borderColor = "black";
+  borderDiv.style.borderWidth = "2px"
+
+  const rowDiv = document.createElement("div");
+  rowDiv.classList.add("row", "border");
+  rowDiv.style.borderColor = "black";
+  rowDiv.style.borderWidth = "2px"
+
+  const col1Div = document.createElement("div");
+  col1Div.classList.add("col");
+  
+
+  const innerRowDiv = document.createElement("div");
+  innerRowDiv.classList.add("row");
+
+  const itemDiv = document.createElement("div");
+  itemDiv.classList.add("item");
+
+  // Create and configure the image element
+  const imgElement = document.createElement("img");
+  imgElement.src = itemPic;
+  imgElement.alt = itemName; // Set alt attribute for accessibility
+  imgElement.classList.add("item-image");
+  imgElement.style.width = "120px";
+imgElement.style.height = "80px";
+
+  // Append the image to the itemDiv
+  itemDiv.appendChild(imgElement);
+
+  // Create a span element for the item name
+  const itemNameSpan = document.createElement("span");
+  itemNameSpan.textContent = itemName;
+  itemNameSpan.style.position = "absolute";
+  itemNameSpan.style.marginLeft = "30px";
+  itemNameSpan.style.marginTop = "30px";
+  itemNameSpan.style.fontSize = "25px";
+  itemNameSpan.style.fontWeight = "bolder";
+
+  itemDiv.appendChild(itemNameSpan);
+
+  const deleteRowDiv = document.createElement("div");
+  deleteRowDiv.classList.add("row");
+
+  const deleteLink = document.createElement("a");
+  deleteLink.classList.add("text-danger");
+  deleteLink.textContent = "Delete";
+  deleteLink.style.position = "absolute";
+  deleteLink.style.right = "55px";
+  deleteLink.href = "#";
+  deleteLink.addEventListener("click", async () => {
+    try {
+
+    await deleteDoc(doc(db, "cart", itemId));
+    containerDiv.remove();
+    
+  
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  });
+
+  const col2Div = document.createElement("div");
+  col2Div.classList.add("col");
+
+  const formGroupDiv = document.createElement("div");
+  formGroupDiv.classList.add("form-group");
+
+  const quantityLabel = document.createElement("label");
+  quantityLabel.setAttribute("for", "quantityDropdown");
+  quantityLabel.textContent = "Quantity:";
+
+  const quantityDropdown = document.createElement("select");
+  quantityDropdown.classList.add("form-control");
+  quantityDropdown.id = "quantityDropdown";
+  const quantityOptions = [1, 2, 3];
+  quantityOptions.forEach((option) => {
+    const optionElement = document.createElement("option");
+    optionElement.textContent = option;
+    quantityDropdown.appendChild(optionElement);
+  });
+
+  const col3Div = document.createElement("div");
+  col3Div.classList.add("col", "text-right");
+
+  const priceDiv = document.createElement("div");
+  priceDiv.classList.add("price");
+  priceDiv.textContent = "Price: ";
+  const boldSpan = document.createElement("span");
+  boldSpan.classList.add("font-weight-bold");
+  boldSpan.textContent = itemPrice;
+  priceDiv.appendChild(boldSpan);
+
+  // Append all elements to their respective parent elements
+  containerDiv.appendChild(borderDiv);
+  borderDiv.appendChild(rowDiv);
+  rowDiv.appendChild(col1Div);
+  col1Div.appendChild(innerRowDiv);
+  innerRowDiv.appendChild(itemDiv);
+  innerRowDiv.appendChild(deleteRowDiv);
+  deleteRowDiv.appendChild(deleteLink);
+  rowDiv.appendChild(col2Div);
+  col2Div.appendChild(formGroupDiv);
+  formGroupDiv.appendChild(quantityLabel);
+  formGroupDiv.appendChild(quantityDropdown);
+  rowDiv.appendChild(col3Div);
+  col3Div.appendChild(priceDiv);
+
+  return containerDiv;
+
+  
+}
+
+    </script>
+    <script src="script.js"></script>
+  </body>
+  
+</html>

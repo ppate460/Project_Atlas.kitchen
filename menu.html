@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="menu_style.css">
+    <script src="firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    
+    <title>Menu</title>
+  
+</head>
+<br>
+<header>
+    <div class="logo-container">
+      <a href="index.html"
+        ><img class="logoimg" src="images/logo.jpeg" alt=""
+      /></a>
+    </div>
+    <nav>
+
+      <div class="menu-toggle" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <a href="cart.html" class="shopping-cart-icon">
+        <img src="images/cart.png" alt="Shopping Cart" />
+      </a>
+      
+      <ul id="menu" class="hidden menu">
+        <div class="menuOuter">
+          <div class="menuoption1">
+          <li><a class="buttons" href="index.html">Home</a></li>
+          </div>
+          <div class="menuoption">
+          <li><a class="buttons" href="menu.html">Menu</a></li>
+          </div>
+          <div class="menuoption1">
+          <li><a class="buttons" href="#">Specials</a></li>
+          </div>
+          <div class="menuoption">
+          <li><a class="buttons" href="reservation.html">Reserve Now</a></li>
+          </div>
+          <div class="darkModeContainer menuoption1">
+          <li><a class="buttons" href="#">Dark mode</a></li>
+          <li>
+            <label class="switch">
+              <input type="checkbox" id="darkModeSwitch" onclick="toggleDarkMode()" />
+              <span class="slider round"></span>
+            </label>
+          </li>
+
+          </div>
+          <div class="menuoption">
+            <li><a class="buttons" href="Login.html">Log In</a></li>
+          </div>
+          <div class="menuoption1">
+            <li><a class="buttons" href="Login.html">Sign Up</a></li>
+          </div>
+          <div class="menuoption">
+            <li><a class="buttons" href="#">Contact Us</a></li>
+          </div>
+          <div class="menuoption1">
+            <li><a class="buttons" href="#">About Us</a></li>
+          </div>
+          <div class="ratingReview">
+            <li><a class="buttons" href="#">Rating & Review</a></li>
+          </div>
+        </div>
+      </ul>
+      
+    </nav>
+  </header>
+      <div class ="menuDiv">
+        <label class ="MenuText">Menu</label>
+      </div>
+    
+
+    <main class="menu-container">
+        <!-- Item 1 -->
+        <div class="menu-item">
+            <img src="images/item1.jpeg" alt="Item 1">
+            <h3>Hungry Head</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="menu-item">
+            <img src="images/item2.jpeg" alt="Item 2">
+            <h3>Imperial Gourmet</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="menu-item">
+            <img src="images/item3.jpeg" alt="Item 3">
+            <h3>Fiesty Fork</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="menu-item">
+            <img src="images/item4.jpeg" alt="Item 4">
+            <h3>Verve Diner</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 1 -->
+        <div class="menu-item">
+            <img src="images/item5.jpeg" alt="Item 5">
+            <h3>King Ming</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="menu-item">
+            <img src="images/item6.jpeg" alt="Item 6">
+            <h3>Spicy Harvest Noodles</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 3 -->
+        <div class="menu-item">
+            <img src="images/item7.jpeg" alt="Item 7">
+            <h3>Samosa</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+
+        <!-- Item 4 -->
+        <div class="menu-item">
+            <img src="images/item8.jpeg" alt="Item 8">
+            <h3>Atomic Pav Bhaji</h3>
+            <button class="add-to-cart-btn" style="margin-top: 10px;" onclick="addToCart('Item 1 Name', 'Item 1 Price')">Add to Cart</button>
+            <button class="add-to-favorite" style="margin-top: 20px;">Add to Favorite</button>
+        </div>
+    </main>
+      
+    <footer class="footerClass">
+        <div class="option1">
+          <label>Contact Us</label>
+        </div>
+        <div class="option2">
+          <label>Nutritional & Allergens</label>
+        </div>
+        <div class="option1">
+          <label>Careers</label>
+        </div>
+        <div class="option2">
+          <label>FAQs</label>
+        </div>
+        <div class="option1">
+          <label>Gift Cards & Offers</label>
+        </div>
+        <div class="option2">
+          <label>Legal & Privacy Notices</label>
+        </div>
+        <div class="option1">
+          <label>Do Not Sell or Share My Personal Information</label>
+        </div>
+        <div class="option2">
+          <label>Accessibility Statement</label>
+        </div>
+      </footer>
+      <script type="module">
+        // Initialize Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+    
+        // Your Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAe8YMj8gHoIBbarYoHo3EaSJ27ADN1gAQ",
+          authDomain: "cs422actual.firebaseapp.com",
+          projectId: "cs422actual",
+          storageBucket: "cs422actual.appspot.com",
+          messagingSenderId: "732736778005",
+          appId: "1:732736778005:web:ec34eaa2adeea98e90431c",
+          measurementId: "G-Y5RWRMPES1"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+    
+        document.addEventListener("DOMContentLoaded", function () {
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                  const itemName = event.target.parentNode.querySelector('h3').textContent;
+                  const itemImage = event.target.parentNode.querySelector('img').src;
+    
+                    // Add the item to the cart in Firestore
+                    alert("Item added to cart");
+                    addItemToCart(itemName, itemImage);
+                });
+            });
+        });
+    
+        async function addItemToCart(itemName, itemImage) {
+            try {
+                // Add the item to the 'cart' collection in Firestore
+                await addDoc(collection(db, "cart"), {
+                    item: itemName,
+                    image: itemImage
+                });
+                // Redirect to cart page
+          
+            } catch (e) {
+                console.error("Error adding item to Firebase: ", e);
+            }
+        }
+    </script>
+
+</body>
+    <script src="script.js"></script>
+    <script src="carouselRotation.js"></script>
+</html>
